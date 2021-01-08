@@ -125,8 +125,12 @@ function drawSky() {
 function drawMoon() {
     push()
     const moonPos = createVector(width-currentMoonX, moonHeight)
-    fill(255)
-    //ellipse(moonPos.x, moonPos.y, 100, 100)
+
+    noStroke()
+    
+    fill(0, 100)
+    drawRadial(moonPos, 100, 300, 20)
+
     imageMode(CENTER)
     image(moonImage, moonPos.x, moonPos.y, moonImage.width, moonImage.height)
     currentMoonX+=skySpeed
@@ -134,6 +138,8 @@ function drawMoon() {
         moonHeight = baseMoonHeight + ((Math.random()*80)-40)
         currentMoonX = -200
     }
+
+    fill(255, 1)
     drawRadial(moonPos, 100, 500, 10)
     pop()
 }
@@ -217,8 +223,6 @@ function draw() {
 
 function drawRadial(pos, minRad, maxRad, qual = 1) {
     push()
-    noStroke()
-    fill(255, 1)
     const diff = maxRad - minRad
     for(let i = maxRad; i >= minRad; i-=qual) {
         ellipse(pos.x, pos.y, i, i)
