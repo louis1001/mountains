@@ -144,6 +144,9 @@ function drawCar(pos) {
     const lightsColor = color(228, 191, 135)
     const wheelSize = 40
     const carLength = 120
+    
+    pos = constrain(pos, 0, width-carLength)
+    
     let ball = createVector(pos, foreground.groundLevelFor(pos)*height - wheelSize/2)
     let ball2 = createVector(pos+carLength, foreground.groundLevelFor(pos+carLength)*height - wheelSize/2)
 
@@ -204,7 +207,7 @@ function draw() {
         const normalI = (i+1)/mountains.length
         fill(lerpColor(fadedMountain, mountainColor, normalI))
         if (m === foreground)
-            drawCar(width/4 + sin(frameCount/200)*200)
+            drawCar(2*width/5 + sin(frameCount/200)*width/4)
         m.render(true)
         m.render()
     })
