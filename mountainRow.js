@@ -3,7 +3,7 @@ class MountainRow {
         this.minGround = 1-minM
         this.maxGround = 1-maxM
 
-        this.resolution = 30
+        this.resolution = 20
         this.step = Math.trunc(Math.random()*1000)
         this.generalSpeed = .7
         this.stepSpeed = spd

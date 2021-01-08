@@ -65,11 +65,9 @@ function setup() {
     addMountain(new MountainRow(.1, .3))
     addMountain(new MountainRow(.01, .2))
 
-    let moonCanvas = createGraphics(300, 300)
-    moonCanvas.imageMode(CENTER)
-    moonCanvas.image(moonImage, moonCanvas.width/2, moonCanvas.height/2, 100, 100)
+    let moonCanvas = createGraphics(width/4, width/4)
+    generateMoon(moonCanvas)
     moonImage = moonCanvas
-    moonImage.filter(BLUR, 4)
 
     generateStars()
 
@@ -82,6 +80,23 @@ const baseMoonHeight = 250
 
 let currentMoonX = 200
 let moonHeight = baseMoonHeight + ((Math.random()*80)-40)
+
+function generateMoon(c) {
+    const glowColor = color('#d9d4eb')
+    glowColor.setAlpha(1) //color(250, 230, 245, 0)
+    c.noStroke()
+
+    const center = createVector(c.width/2, c.height/2)
+    c.fill(0, 80)
+    drawRadial(c, center, 100, c.width, 10)
+    
+    c.imageMode(CENTER)
+    c.image(moonImage, center.x, center.y, 100, 100)
+    c.filter(BLUR, 4)
+
+    c.fill(glowColor, 1)
+    drawRadial(c, center, 100, c.width, 3)
+}
 
 const starCount = 400
 
@@ -126,11 +141,6 @@ function drawMoon() {
     push()
     const moonPos = createVector(width-currentMoonX, moonHeight)
 
-    noStroke()
-    
-    fill(0, 100)
-    drawRadial(moonPos, 100, 300, 20)
-
     imageMode(CENTER)
     image(moonImage, moonPos.x, moonPos.y, moonImage.width, moonImage.height)
     currentMoonX+=skySpeed
@@ -139,8 +149,6 @@ function drawMoon() {
         currentMoonX = -200
     }
 
-    fill(255, 1)
-    drawRadial(moonPos, 100, 500, 10)
     pop()
 }
 
@@ -221,13 +229,13 @@ function draw() {
     // drawDebugLines()
 }
 
-function drawRadial(pos, minRad, maxRad, qual = 1) {
-    push()
+function drawRadial(c, pos, minRad, maxRad, qual = 1) {
+    c.push()
     const diff = maxRad - minRad
     for(let i = maxRad; i >= minRad; i-=qual) {
-        ellipse(pos.x, pos.y, i, i)
+        c.ellipse(pos.x, pos.y, i, i)
     }
-    pop()
+    c.pop()
 }
 
 function drawDebugLines() {
